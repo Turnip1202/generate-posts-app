@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= typeof code !=='undefined' ? code : 500 %> - <%= typeof message !=='undefined' ? message : '服务器错误' %>
+  </title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f8f9fa;
+      color: #343a40;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .error-container {
+      max-width: 800px;
+      padding: 2rem;
+      text-align: center;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .error-code {
+      font-size: 120px;
+      font-weight: bold;
+      color: #dc3545;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .error-code::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: #dc3545;
+      border-radius: 2px;
+    }
+
+    .error-message {
+      font-size: 24px;
+      color: #495057;
+      margin-bottom: 2rem;
+    }
+
+    .error-details {
+      color: #6c757d;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .error-time {
+      color: #6c757d;
+      font-size: 14px;
+      margin-bottom: 1rem;
+    }
+
+    .error-user {
+      color: #6c757d;
+      font-size: 14px;
+      margin-bottom: 2rem;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+    }
+
+    .support-text {
+      margin-top: 2rem;
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    .support-link {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .support-link:hover {
+      text-decoration: underline;
+    }
+
+    .error-icon {
+      font-size: 64px;
+      margin-bottom: 1rem;
+    }
+
+    /* 添加动画效果 */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .error-container {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .error-container {
+        margin: 10px;
+        padding: 1.5rem;
+      }
+
+      .error-code {
+        font-size: 80px;
+      }
+
+      .error-message {
+        font-size: 20px;
+      }
+    }
+
+    /* 自定义滚动条 */
+    .error-details::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .error-details::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .error-details::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+
+    .error-details::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="error-container">
+    <div class="error-code">
+      <%= typeof code !=='undefined' ? code : 500 %>
+    </div>
+    <div class="error-message">
+      <%= typeof message !=='undefined' ? message : '哎呀！出错了' %>
+    </div>
+
+    <% if (typeof stack !=='undefined' && process.env.NODE_ENV==='development' ) { %>
+      <div class="error-details">
+        <pre><%= stack %></pre>
+      </div>
+      <% } %>
+
+        <div class="error-time">
+          错误发生时间：<%= new Date().toISOString().replace('T', ' ' ).slice(0, 19) %>
+        </div>
+
+        <div class="error-user">
+          <% if (typeof user !=='undefined' ) { %>
+            用户：<%= user %>
+              <% } else { %>
+                用户：访客
+                <% } %>
+        </div>
+
+        <button class="back-button" onclick="window.history.back()">返回上一页</button>
+
+        <div class="support-text">
+          需要帮助？请 <a href="https://github.com/Turnip" class="support-link">联系支持</a> 或
+          <a href="/" class="support-link">返回首页</a>
+        </div>
+  </div>
+
+  <script>
+    // 添加动态效果
+    document.addEventListener('DOMContentLoaded', function () {
+      // 错误代码闪烁效果
+      const errorCode = document.querySelector('.error-code');
+      setInterval(() => {
+        errorCode.style.opacity = '0.7';
+        setTimeout(() => {
+          errorCode.style.opacity = '1';
+        }, 200);
+      }, 3000);
+
+      // 错误发生时自动复制错误信息
+      const errorDetails = document.querySelector('.error-details');
+      if (errorDetails) {
+        errorDetails.addEventListener('click', function () {
+          const text = this.textContent;
+          navigator.clipboard.writeText(text).then(() => {
+            alert('错误信息已复制到剪贴板');
+          }).catch(err => {
+            console.error('复制失败:', err);
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
