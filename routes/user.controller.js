@@ -1,13 +1,16 @@
 // 模拟用户数据库
 const usrPwds = require('../db/db.js')
+const { getPostDate } = require("../utils")
+
 
 module.exports = async function (fastify, opts) {
   // 登录页面路由
   fastify.get("/", async (request, reply) => {
+    const date = getPostDate(new Date())
     return reply.view("template/login.ejs", {
       pageTitle: '登录',
       user: 'Turnip1202',
-      currentTime: new Date().toISOString().replace('T', ' ').slice(0, 19)
+      currentTime: date
     })
   })
 

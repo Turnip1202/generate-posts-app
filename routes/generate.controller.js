@@ -3,6 +3,7 @@ const path = require('path')
 const config = require('../config')
 const predefinedTags = config.predefinedTags
 const predefinedCategories = config.predefinedCategories
+const { getPostDate } = require("../utils")
 
 // 模拟用户数据库
 const usrPwds = require('../db/db.js')
@@ -42,7 +43,8 @@ module.exports = async function (fastify, opts) {
       await fs.ensureDir(savePath)
 
       // 构建文件内容
-      const currentDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+      const currentDate = getPostDate(new Date())
+      console.log("currentDate", currentDate)
       const frontMatter = config.gTemplate(title, currentDate, description, tags, category, draft)
 
       // 组合完整的文件内容
@@ -68,8 +70,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.get("/generate/:usrPwds", async (request, reply) => {
     const userInfo = request.params.usrPwds;
-    const currentTime = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-
+    const currentTime = getPostDate(new Date())
     //usrPwds的格式是 userName&password
     const [userName, password] = userInfo.split("&");
     const user = usrPwds.find(usrPwd => usrPwd.userName === userName && usrPwd.password === password)
