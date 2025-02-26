@@ -1,6 +1,10 @@
 # generate-posts-app
 
-基于fastify的一个用户生成md文档的简单服务
+## 如果可以，欢迎贡献。
+
+### 所有的代码尽量配置化，方便扩展。
+
+### 基于fastify的一个用户生成md文档的简单服务
 
 ![6097539b-ced0-4c81-ae5b-f1f83fb07080](./images/6097539b-ced0-4c81-ae5b-f1f83fb07080.png)
 
@@ -25,5 +29,3 @@ npm install
 ```bash
 npm start
 ```
-
-
