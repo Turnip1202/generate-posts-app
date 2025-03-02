@@ -3,6 +3,9 @@ const gTemplate = require("./template.js")
 const predefinedTags = [
   'JavaScript',
   "Electron",
+  "Java",
+  "SpringCloud",
+  "Spring",
   'Node.js',
   'Fastify',
   'Express',

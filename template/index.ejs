@@ -97,14 +97,14 @@
             </el-form-item>
 
             <el-form-item label="标签">
-              <el-select v-model="fileForm.tags" multiple placeholder="请选择标签">
+              <el-select @visible-change="fetchConfig" v-model="fileForm.tags" multiple placeholder="请选择标签">
                 <el-option v-for="tag in availableTags" :key="tag" :label="tag" :value="tag">
                 </el-option>
               </el-select>
             </el-form-item>
 
             <el-form-item label="分类">
-              <el-select v-model="fileForm.category" placeholder="请选择分类">
+              <el-select @visible-change="fetchConfig" v-model="fileForm.category" placeholder="请选择分类">
                 <el-option v-for="category in availableCategories" :key="category" :label="category" :value="category">
                 </el-option>
               </el-select>
@@ -180,7 +180,9 @@
 
 
         // 获取配置信息
-        const fetchConfig = async () => {
+        const fetchConfig = async (isVisible) => {
+          console.log("fetch config", isVisible)
+          if (!isVisible) return
           try {
             const response = await fetch('/config')
             const data = await response.json()
@@ -284,6 +286,7 @@
 
         return {
           fileForm,
+          fetchConfig,
           availableTags,
           availableCategories,
           fileList,
