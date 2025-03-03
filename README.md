@@ -65,13 +65,13 @@ username,
 
 ## 🌟 示例
 
-![6097539bced04c81ae5bf1f83fb07080](/D:\ACode\A_Code\Project\v1\BlogGitPage\generate-posts-app/images/6097539b-ced0-4c81-ae5b-f1f83fb07080.png)
+![6097539bced04c81ae5bf1f83fb07080](./images/6097539b-ced0-4c81-ae5b-f1f83fb07080.png)
 
 预览图：
 
-![70f1b90f137d4f99a5dca6335fb365b5](/D:\ACode\A_Code\Project\v1\BlogGitPage\generate-posts-app/images/70f1b90f-137d-4f99-a5dc-a6335fb365b5.png)
+![70f1b90f137d4f99a5dca6335fb365b5](./images/70f1b90f-137d-4f99-a5dc-a6335fb365b5.png)
 
-![74ba9d5fd5cd4f9aa2c821a7123e26e2](/D:\ACode\A_Code\Project\v1\BlogGitPage\generate-posts-app/images/74ba9d5f-d5cd-4f9a-a2c8-21a7123e26e2.png)
+![74ba9d5fd5cd4f9aa2c821a7123e26e2](./images/74ba9d5f-d5cd-4f9a-a2c8-21a7123e26e2.png)
 
 ## 🧑💻 贡献指南
 
