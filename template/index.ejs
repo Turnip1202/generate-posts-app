@@ -12,6 +12,7 @@
   <script src="https://unpkg.com/element-plus"></script>
   <!-- 引入图标 -->
   <link rel="stylesheet" href="https://unpkg.com/@element-plus/icons-vue@2.3.1/dist/index.css">
+  <script src=" https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js "></script>
   <style>
     .container {
       max-width: 1200px;
@@ -85,7 +86,7 @@
             </el-form-item>
 
             <el-form-item label="保存路径">
-              <el-input v-model="fileForm.savePath" placeholder="请输入保存路径"></el-input>
+              <el-input v-model="fileForm.savePath" @input="changeInput" placeholder="请输入保存路径"></el-input>
             </el-form-item>
 
             <el-form-item label="标题">
@@ -192,11 +193,14 @@
             ElMessage.error('获取配置信息失败')
           }
         }
+        const changeInput = (updateValue) => {
+          fetchFiles(updateValue)
+        }
 
         // 获取文件列表
-        const fetchFiles = async () => {
+        const fetchFiles = _.debounce(async (savePath) => {
           try {
-            const response = await fetch(`/files?directory=${fileForm.value.savePath}`)
+            const response = await fetch(`/files?directory=${savePath}`)
             const data = await response.json()
             if (data.success) {
               fileList.value = data.files
@@ -206,8 +210,7 @@
           } catch (error) {
             ElMessage.error('获取文件列表失败')
           }
-        }
-
+        }, 500, { 'maxWait': 1000 })
         // 生成文件
         const generateFile = async () => {
           try {
@@ -221,7 +224,7 @@
             const data = await response.json()
             if (data.success) {
               ElMessage.success('文件生成成功')
-              fetchFiles()
+              fetchFiles(fileForm.value.savePath)
             } else {
               ElMessage.error(data.message)
             }
@@ -243,7 +246,7 @@
             const data = await response.json()
             if (data.success) {
               ElMessage.success('文件删除成功')
-              fetchFiles()
+              fetchFiles(fileForm.value.savePath)
             } else {
               ElMessage.error(data.message)
             }
@@ -269,7 +272,7 @@
 
         // 刷新文件列表
         const refreshFiles = () => {
-          fetchFiles()
+          fetchFiles(fileForm.value.savePath)
         }
 
         // 格式化日期
@@ -280,13 +283,14 @@
         onMounted(() => {
 
           fetchConfig()
-          fetchFiles()
+          fetchFiles(fileForm.value.savePath)
         })
 
 
         return {
           fileForm,
           fetchConfig,
+          changeInput,
           availableTags,
           availableCategories,
           fileList,
