@@ -9,6 +9,8 @@ const options = {}
 
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
+
+
   // 注册 cookie 插件
   fastify.register(fastifyCookie, {
     secret: "my-secret", // 请更改为你的密钥
@@ -29,6 +31,7 @@ module.exports = async function (fastify, opts) {
     dir: path.join(__dirname, 'plugins'),
     options: Object.assign({}, opts)
   })
+
 
   // This loads all plugins defined in routes
   // define your routes in one of these
